@@ -25,7 +25,7 @@ contract CertificateCollection is ERC721 {
     }
     
     
-    mapping(uint256 => Certificate) public CertificateCollection;
+    mapping(uint256 => Certificate) public CertificateCollection; 
 
 
    function registerCertificate(
