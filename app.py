@@ -64,8 +64,8 @@ def mint_nft():
         # return render_template('index.html')
         minter ="University of Toronto"
         
-        generate_nft(student_name,content,grade,description,wallet_address,minter)
-        return 'Image has been uploaded', 200
+        result = generate_nft(student_name,content,grade,description,wallet_address,minter)
+        return result, 200
     #except  Exception as e:
         #print("something went wrong",e)
         #return 'IIssue minting NFT', 500
@@ -171,8 +171,12 @@ def generate_nft(name,file,grade,description,wallet_address,minter):
     # This generally works on the mainnet - Rinkeby, not so much
     receipt = w3.eth.waitForTransactionReceipt(tx_hash)      
 
-    complete_uril = "https://{nft_uri})"
-    complete_ipfs_gateway_link = "https://{token_json['image']}"
-    print(complete_uril)
+    complete_url= "https://"+nft_uri
+    complete_ipfs_gateway_link = "https://"+token_json['image']
+    print(complete_url)
     print(complete_ipfs_gateway_link)
-    return complete_uril
+
+    result ={}
+    result['complete_url'] = complete_url
+    result['complete_ipfs_gateway_link'] = complete_ipfs_gateway_link
+    return result
