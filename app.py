@@ -1,28 +1,78 @@
+# ------------------------------------------------------------------------------
+# Imports
+from flask import Flask, render_template, request
+from werkzeug.utils import secure_filename
 from datetime import date
 import os
 import json
 from web3 import Web3
 from pathlib import Path
 from dotenv import load_dotenv
-import streamlit as st
 import requests
+from cryptography.fernet import Fernet
+
+# ------------------------------------------------------------------------------
+# Flask App
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 
 load_dotenv()
 
 # Create a W3 Connection
 w3 = Web3(Web3.HTTPProvider(os.getenv("WEB3_PROVIDER_URI")))
-st.write("This is the url",os.getenv("WEB3_PROVIDER_URI"))
+
 # Set up Pinata Headers
 json_headers = {
-    "Content-Type":"application/json",
-    "pinata_api_key": os.getenv("PINATA_API_KEY"),
-    "pinata_secret_api_key": os.getenv("PINATA_SECRET_API_KEY")
+        "Content-Type":"application/json",
+        "pinata_api_key": os.getenv("PINATA_API_KEY"),
+        "pinata_secret_api_key": os.getenv("PINATA_SECRET_API_KEY")
 }
 
 file_headers = {
-    "pinata_api_key": os.getenv("PINATA_API_KEY"),
-    "pinata_secret_api_key": os.getenv("PINATA_SECRET_API_KEY")
+        "pinata_api_key": os.getenv("PINATA_API_KEY"),
+        "pinata_secret_api_key": os.getenv("PINATA_SECRET_API_KEY")
 }
+
+
+@app.route('/mint_nft', methods=['POST'])
+def mint_nft():
+    #try:
+        pic = request.files["pic"]
+        if not pic:
+            return 'No pic uploaded', 400
+
+        file_name = secure_filename(pic.filename)
+        mimetype = pic.mimetype
+
+        form_data = request.form
+        student_name = form_data['student_name']
+        grade = form_data['grade']
+        description = form_data['description']
+        wallet_address = form_data['wallet_address']
+
+        pic.save(os.path.join("./uploads", file_name))
+        pic.seek(0)
+        
+        content = pic.read()
+        #content = str(content)
+       
+        # return render_template('index.html')
+        minter ="University of Toronto"
+        
+        generate_nft(student_name,content,grade,description,wallet_address,minter)
+        return 'Image has been uploaded', 200
+    #except  Exception as e:
+        #print("something went wrong",e)
+        #return 'IIssue minting NFT', 500
+    #except:
+     #   print("Unexpected error:", sys.exc_info()[0])
+
+
 
 def convert_data_to_json(content):
     data = {"pinataOptions":{"cidVersion":1}, 
@@ -45,13 +95,14 @@ def pin_json_to_ipfs(json):
     ipfs_hash = r.json()["IpfsHash"]
     return ipfs_hash
 
-def pin_nft(name, file,**kwargs):
+def pin_nft(nft_data, file,**kwargs):
     # Pin certificate picture to IPFS
-    ipfs_file_hash = pin_file_to_ipfs(file.getvalue())
+    #ipfs_file_hash = pin_file_to_ipfs(file.getvalue())
+    ipfs_file_hash = pin_file_to_ipfs(file)
 
     # Build our NFT Token JSON
     token_json = {
-       "name": name,
+       "nft_data": nft_data,
        "image": f"ipfs.io/ipfs/{ipfs_file_hash}"
     }
 
@@ -71,9 +122,8 @@ def pin_nft(name, file,**kwargs):
 ## Load the contract
 ######################################################################
 
-@st.cache(allow_output_mutation=True)
 def load_contract():
-    with open(Path("./contracts/compiled/Picture_abi.json")) as file:
+    with open(Path("./contracts/compiled/Certificate_abi.json")) as file:
         picture_abi = json.load(file)
 
     contract_address = os.getenv("SMART_CONTRACT_ADDRESS")
@@ -81,45 +131,45 @@ def load_contract():
     beach_contract = w3.eth.contract(address=contract_address,
                     abi=picture_abi)
 
-    return beach_contract            
-
-contract = load_contract()
-
-account = st.text_input("Enter Account Address: ", value="0xC0277d02d43Ed6105029FE6c51Fa990E696147BC")
-
-######################################################################
-## Streamlit Inputs
-######################################################################
-st.markdown("## Create the NFT")
-
-name = st.text_input("Enter the name of the Image: ")
-artist = st.text_input("Enter the artist name")
-image_details = st.text_input("Enter image Details: ")
-
-# Upload the Certificate Picture File
-file = st.file_uploader("Upload Image", type=["png","jpeg", "jpg"])
+    return beach_contract    
 
 
-######################################################################
-## Button to Award the Certificate
-######################################################################
 
-if st.button("Award NFT"):
 
-    nft_ipfs_hash,token_json = pin_nft(name,file,  
-             image_details=image_details)
+
+def generate_nft(name,file,grade,description,wallet_address,minter):
+    contract = load_contract()
+    nft_data ={}
+    nft_data['name'] = name;
+    nft_data['grade'] = grade;
+    nft_data['description'] = description;
+    nft_data['wallet_address'] = wallet_address;
+    nft_data['minter'] = minter;
+
+    nft_json_data = json.dumps(nft_data)
+    print(nft_data)
+
+    key = Fernet.generate_key()
+    fernet = Fernet(key)
+    
+    encrypted_data = fernet.encrypt(nft_json_data.encode())
+    
+    print(encrypted_data)
+    encrypted_data = str(encrypted_data)
+    
+    nft_ipfs_hash,token_json = pin_nft(nft_json_data,file,encrypted_data=encrypted_data)
 
     nft_uri = f"ipfs.io/ipfs/{nft_ipfs_hash}"
-    st.write(nft_uri)
+ 
     # THIS ONLY WORKS IN GANACHE
-    tx_hash = contract.functions.registerPicture(account, name, artist, image_details, nft_uri).transact({'from':account,'gas':1000000})
+    #tx_hash = contract.functions.registerPicture(account, name, artist, image_details, nft_uri).transact({'from':account,'gas':1000000})
+    tx_hash = contract.functions.registerCertificate(wallet_address, name, grade, description, nft_uri,minter,encrypted_data).transact({'from':wallet_address,'gas':1000000})
+
     # This generally works on the mainnet - Rinkeby, not so much
     receipt = w3.eth.waitForTransactionReceipt(tx_hash)      
 
- 
-    st.write("Transaction mined")
-    st.write(dict(receipt))
-
-    st.write("You can view the pinned metadata file with the following IPFS Gateway Link")
-    st.markdown(f"[NFT IPFS Gateway Link] (https://{nft_uri})")
-    st.markdown(f"[NFT IPFS Image Link] (https://{token_json['image']})")
+    complete_uril = "https://{nft_uri})"
+    complete_ipfs_gateway_link = "https://{token_json['image']}"
+    print(complete_uril)
+    print(complete_ipfs_gateway_link)
+    return complete_uril

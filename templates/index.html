@@ -1,25 +1,49 @@
 
 <html>
   <head>
-    <title>MetaMask Connection Page</title>
+    <title>12 MetaMask Connection Page</title>
 
   </head>
   <body>
+    
     <center>
-    <h1>Connect Your MetaMask Wallet Here!</h1>
+    
     <button id='connectWallet' onclick="">Connect Wallet</button>
-    <button id='getBalance' onclick="checkBalance()">Get Balance of Wallet</button>
+
+    <!--<button id='getBalance' onclick="checkBalance()">Get Balance of Wallet</button>-->
 
     <p id="walletAddress"></p>
     <p id="walletBalance"></p>
 
-    <script type="text/javascript">
+ 
+    
+
+    </center>
+
+   <form action = "/mint_nft" enctype="multipart/form-data" method="POST">
+      Student name:<input type="text" name="student_name" value="student_name"/>
+      <br>
+      Grade:<input type="text" name="grade" value="A+"/>
+      <br>
+      Description <input type="text" name="description" value="Fintech course at University of Toronto"/>
+      <br>
+      Encryption Key: <input type="text" name="encryption_key" value="ABC123"/>
+      <br>
+      Certificate Image:<input type="file" name="pic"/>
+      <br>
+      Wallet address:<input type="text" id="wallet_address" name="wallet_address" value=""/>
+      <br>
+      <input type="submit" value="Mint NFT"  id="mintNFT" onclick=""/>
+    </form>
+
+
+<script type="text/javascript">
       window.userWalletAddress = null
       const connectWallet = document.getElementById('connectWallet')
       const walletAddress = document.getElementById('walletAddress')
-      const walletAddress1 = document.getElementById('walletAddress1')
+      const wallet_address = document.getElementById('wallet_address')
       const walletBalance = document.getElementById('walletBalance')
-
+    
 
 
       function checkInstalled() {
@@ -43,7 +67,7 @@
 
         window.userWalletAddress = accounts[0]
         walletAddress.innerText = window.userWalletAddress
-        walletAddress1.value = window.userWalletAddress
+        wallet_address.value = window.userWalletAddress
 
         connectWallet.innerText = 'Sign Out'
         connectWallet.removeEventListener('click', connectWalletwithMetaMask)
@@ -86,23 +110,6 @@
 
 
     </script>
-
-    </center>
-
-    <form action = "/mint_nft" enctype="multipart/form-data" method="POST">
-      <input type="text" name="student_name"/>
-      <input type="text" name="grade"/>
-      <input type="text" name="description"/>
-      <input type="text" name="encryption_key"/>
-      <input type="file" name="pic"/>
-      <input type="text" name="walletAddress1" value="0xC0277d02d43Ed6105029FE6c51Fa990E696147BC"/>
-      <input type="submit" value="Mint NFT"/>
-
-
-
-
-    </form>
-
 
   </body>
 </html>
