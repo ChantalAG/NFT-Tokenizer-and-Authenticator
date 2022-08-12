@@ -31,3 +31,16 @@ The original attributes of the NFT will have to match the decrypted data in orde
 4) set FLASK_APP=app.py
 5) flask run
 6) Running on http://127.0.0.1:5000/ 
+7) pip install cryptography
+
+
+
+The NFT json data will look as below
+{"nft_data":"{\"name\": \"student_name\", \"grade\": \"A+\", \"description\": \"Fintech course at University of Toronto\", \"wallet_address\": \"0x1a5d3d835984588ad0fcb259cc543d26d8110a67\", \"minter\": \"University of Toronto\"}","image":"ipfs.io/ipfs/Qmd8PSqng6QzreVArX5X5gr9KnC2diQkTRJPDaRfKW2LUU","encrypted_data":"b'gAAAAABi9c9TiusjBFtRuGoFfGu0LgmZcw9z_HlyziJ6ZvtsYg6v-Gju0DPlhC3jmyWNqJrSBOSTrUrhD5jR5j8b6rdSo0TDAFEB_zyA2qTPNiv-2q-pbj6PRLC62tAMtVPwyRJMTRfU3Wi7Y1FU6Wa3U4I_LZ1qEEqk1Rt3G_NzANJA89GVBcOqwWh-wJG5jkhG-bwZi0r7HEXlolCisXdVez6vZRKtNyxcUhO9M2RLRMRA3DmXNMXFlEL7KLy0B0ipWXTcxkm5chkSIqaVueKYzNuQDxMiCCwCWjMnoIxSLuRs9alEdXmlzxPmKdnDwW6WXsTewbz6p2RtT-nLSUDx8WXthwIZ2Q=='"}
+
+The certificate image path will be an attribute of the NFT that indicates the location in IPFS where the image was stored in blockchain
+
+The encrypted data indicated by the attribute encrypted_data when descrypted will result in the value of the attribute nft_data which will have all the details of the NFT
+i.e "nft_data":"{\"name\": \"student_name\", \"grade\": \"A+\", \"description\": \"Fintech course at University of Toronto\", \"wallet_address\": \"0x1a5d3d835984588ad0fcb259cc543d26d8110a67\", \"minter\": \"University of Toronto\"}
+
+
