@@ -163,6 +163,9 @@ def generate_nft(name,file,grade,description,wallet_address,minter):
  
     # THIS ONLY WORKS IN GANACHE
     #tx_hash = contract.functions.registerPicture(account, name, artist, image_details, nft_uri).transact({'from':account,'gas':1000000})
+    wallet_address = Web3.toChecksumAddress(wallet_address)
+    print(wallet_address)
+
     tx_hash = contract.functions.registerCertificate(wallet_address, name, grade, description, nft_uri,minter,encrypted_data).transact({'from':wallet_address,'gas':1000000})
 
     # This generally works on the mainnet - Rinkeby, not so much
