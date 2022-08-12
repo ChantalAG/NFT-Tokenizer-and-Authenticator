@@ -40,12 +40,12 @@ contract CertificateCollection is ERC721 {
         uint256 tokenId = totalSupply();
         _mint(owner, tokenId);
         _setTokenURI(tokenId, tokenUri);
-        string memory minter_adddress = "0xC0277d02d43Ed6105029FE6c51Fa990E696147BC";
+        //string memory minter_adddress = "0xC0277d02d43Ed6105029FE6c51Fa990E696147BC";
         CertificateCollection[tokenId] = Certificate(name,
                                                     grade,
                                                     description, 
                                                     now, 
-                                                    minter_adddress,
+                                                    owner,
                                                     minter,
                                                     encrypted_data);
         return tokenId;
