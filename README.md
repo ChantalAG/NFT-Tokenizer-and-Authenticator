@@ -35,7 +35,12 @@ A fraud user could specify the same creator_account_address but change some othe
 The original attributes of the NFT will have to match the decrypted data in order to confirm that the NFT is original
 
 ## Technologies
-### MetamaskWebApp
+Metamask
+Remix
+Ganache
+python
+Solidity
+Flask
 
 ## Installation Guide
 ### Set up instructions
