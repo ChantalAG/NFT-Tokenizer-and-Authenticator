@@ -9,6 +9,7 @@ This project will develop a tool that allows academic institutions to Mint NFTs 
 
 This tool can be modified to be used with other industries.
 
+#### [Click here to view slide deck presentation](https://github.com/ChantalAG/NFT-Tokenizer-and-Authenticator/blob/main/NFT%20Minter%20%26%20Authenticator%20presentation_Aug13%2C2022.key)
 ### Minting
 
 NFT Minter will establish a connection with the institution and issue a key for encryption that will be used during the minting process
