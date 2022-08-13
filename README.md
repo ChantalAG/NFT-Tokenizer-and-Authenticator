@@ -53,9 +53,13 @@ Flask
 7) pip install cryptography
 
 The following properties have to be defined in the .env file
-WEB3_PROVIDER_URI=https://mainnet.infura.io/v3/400761c2e97044d29c2fde5e9b6515f8
+This app is currently developed/tested on Ganach local network
+WEB3_PROVIDER_URI=HTTP://127.0.0.1:7545
+
 SMART_CONTRACT_ADDRESS=<SMART CONTRACT ADDRESS>
+
 PINATA_API_KEY=<API_KEY>
+
 PINATA_SECRET_API_KEY=<SECRET API KEY>
 
 ## Examples
@@ -67,6 +71,33 @@ The certificate image path will be an attribute of the NFT that indicates the lo
 
 The encrypted data indicated by the attribute encrypted_data when descrypted will result in the value of the attribute nft_data which will have all the details of the NFT
 i.e "nft_data":"{\"name\": \"student_name\", \"grade\": \"A+\", \"description\": \"Fintech course at University of Toronto\", \"wallet_address\": \"0x1a5d3d835984588ad0fcb259cc543d26d8110a67\", \"minter\": \"University of Toronto\"}
+
+## Screenshots
+
+## Connect to metamask wallet
+![image](Images/1-Connect-Metamask.png)
+
+
+## Verify metamask connected
+![image](Images/2-Metamask-Connected.png)
+
+## Account address populated
+![image](Images/3-WalletAddressPopulatedInTextput.png)
+
+## Page displayes result of minting
+![image](Images/4-ResultOfMinting.png)
+
+## Verify metamask connected
+![image](Images/5_NFT_URLs.png)
+
+
+## Verify certificated uploaded on IPFS network
+![image](Images/6_CertOnIPFS.png)
+
+## Check attributes of the NFT including encrypted data
+![image](Images/7-NFTAttributes.png)
+
+
 
 ## Contributors
 Chantal Garnett
