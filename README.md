@@ -36,7 +36,7 @@ The app will get a token from a trusted entity where the metamask account will b
 Employer will access the Authenticator’s UI on Flask and input NFT details and then authenticator will retrieve the encryption key to decrypt the encrypted NFT attributes.
 Authenticator will compare the decrypted data with the unencrypted data of the NFT to confirm the data matches.  (NFT is authenticated!)
 
-Case 1: 
+Potential scenario 1: 
 
 Anyone could create a similar NFT by copying the  attributes of the original NFT and only change the account address and pretend to be the original creator of the NFT.
 However, it will not have the token that was used to encrypt/decrypt the data. This token information will only be available with the trusted third party and the original creator of the NFT.
@@ -44,7 +44,7 @@ So in order to authenticate the NFT, the details of the NFT will be sent to the 
 The third party can decrypt the data using the token it generated for the account address and time, in this case it will not have the new account address or it will be mapped to a different token and thus the decryption will not be successful and the fraud can be identified.
 
 
-Case 2: 
+Potential scenario 2: 
 
 A fraud user could specify the same creator_account_address but change some other attribute of the NFT like Name or description. In that case, the third party will be able to decrypt the data as it will be able to find the token for the account address. However, after decryption, it will find that the decrypted data has a different Name than the name of the replicated NFT and thus can identify that the NFT is not original.
 The original attributes of the NFT will have to match the decrypted data in order to confirm that the NFT is original.
