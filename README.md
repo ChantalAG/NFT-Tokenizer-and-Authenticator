@@ -104,10 +104,10 @@ The encrypted data indicated by the attribute encrypted_data when descrypted wil
 ## Account address populated
 ![image](Images/3-WalletAddressPopulatedInTextput.png)
 
-## Page displayes result of minting
+## Submit NFT data in form and click button to mint the NFT
 ![image](Images/4-ResultOfMinting.png)
 
-## Verify metamask connected
+## Page displayes result of minting
 ![image](Images/5_NFT_URLs.png)
 
 
