@@ -37,7 +37,7 @@ Authenticator will compare the decrypted data with the unencrypted data of the N
 
 Case 1: 
 
-Anyone could create a similar NFT by copying the  attributes of the original NFT and only chnage the account address and pretend to be the original creator of the NFT.
+Anyone could create a similar NFT by copying the  attributes of the original NFT and only change the account address and pretend to be the original creator of the NFT.
 However, it will not have the token that was used to encrypt/decrypt the data. This token information will only be available with the trusted third party and the original creator of the NFT.
 So in order to authenticate the NFT, the details of the NFT will be sent to the original creator of the NFT.
 The third party can decrypt the data using the token it generated for the account address and time, in this case it will not have the new account address or it will be mapped to a different token and thus the decryption will not be successful and the fraud can be identified.
