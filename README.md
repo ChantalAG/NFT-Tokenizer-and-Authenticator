@@ -13,7 +13,7 @@ This tool can be modified to be used with other industries.
 ### Minting
 
 NFT Minter will establish a connection with the institution and issue a key for encryption that will be used during the minting process
-During minting the key will be used to encrypt NFT attributes including “encrypted data” as an additional NFT attribute
+During minting the key will be used to encrypt NFT attributes including “encrypted data” as an additional NFT attribute.
 
 The NFT will be minted for each student at graduation and include the following attributes:
 
@@ -27,14 +27,14 @@ The NFT will be minted for each student at graduation and include the following 
 
 
 The academic institution will go through a one time setup and registration of their metamask account.  
-The app will get a token from a trusted entity where the metamask account will be registered. This trusted entity will provide a one time token for the account address and keep track of tokens issued (i.e it will keep a mapping of account adress, time of token issuance and actual token)
+The app will get a token from a trusted entity where the metamask account will be registered. This trusted entity will provide a one time token for the account address and keep track of tokens issued (i.e it will keep a mapping of account adress, time of token issuance and actual token).
 
 
 
 ### Authentication
 
 Employer will access the Authenticator’s UI on Flask and input NFT details and then authenticator will retrieve the encryption key to decrypt the encrypted NFT attributes.
-Authenticator will compare the decrypted data with the unencrypted data of the NFT to confirm the data matches  (NFT is authenticated)
+Authenticator will compare the decrypted data with the unencrypted data of the NFT to confirm the data matches.  (NFT is authenticated!)
 
 Case 1: 
 
@@ -53,7 +53,7 @@ The original attributes of the NFT will have to match the decrypted data in orde
 Metamask, 
 Remix, 
 Ganache, 
-python, 
+Python, 
 Solidity, 
 Flask, 
 Html,
@@ -81,7 +81,7 @@ PINATA_SECRET_API_KEY= "SECRET API KEY"
 
 
 ## Usage and Examples
-The certificate image path will be an attribute of the NFT that indicates the location in IPFS where the image was stored in blockchain
+The certificate image path will be an attribute of the NFT that indicates the location in IPFS where the image was stored in blockchain.
 
 The encrypted data indicated by the attribute encrypted_data when descrypted will result in the value of the attribute nft_data which will have all the details of the NFT.
   
